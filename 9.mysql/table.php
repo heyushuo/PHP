@@ -28,7 +28,7 @@
 //	}
 
 //  mysql_query("set names 'utf8'");
-	
+//  mysqli_set_charset($con, "utf8");	//复制汉字乱码
 	//向表中插入数据
 	$sql = "INSERT INTO MyGuests (firstname, lastname, email)
 	VALUES ('John', 'Doe', 'john@example.com');";
