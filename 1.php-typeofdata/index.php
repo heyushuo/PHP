@@ -99,7 +99,9 @@ echo greeting;  // 输出 "欢迎访问 Runoob.com"
 	echo __DIR__;
 	echo "<br>";
 	echo __FILE__;
-	
+	echo "<br>";
+	//产生随机数
+	echo mt_rand(1, 6)
 	
 	
 ?>
