@@ -79,7 +79,8 @@ echo $a;
 	var_dump($cars);
 	
 	
-	
+//	is_array($var)
+//	is_bool($var)
 ?>
 	<hr />
 <?php
