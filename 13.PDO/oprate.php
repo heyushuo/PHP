@@ -22,21 +22,23 @@
 	    die ("Error!: " . $e->getMessage() . "<br/>");
 	}
 	
-	try {
-		//增加数据
-//		$sql='insert into myguests(firstname,lastname,email) values("dajian","good","123456@qq.com")';exec($sql)
-	    //跟新数据
+	
+//	try {
+//		//增加数据
+		$sql='insert into myguests(firstname,lastname,email) values("dajian","good","123456@qq.com")';
+//	    //跟新数据
 //	   $sql='update myguests set firstname="aaa" where id=27' ;exec($sql)
-//查询数据
-        $sql='select * from myguests';
+////查询数据
+////      $sql='select * from myguests';
+//		$ret=$dbh->exec($sql);
 	    $ret=$dbh->query($sql);
-		var_dump($ret);
-//		 if($ret >0){
-//		 	echo "插入成功";
-//		 }
-	}catch(PDOException $e){
-		echo $e->getMessage();
-	}
+//		var_dump($ret);
+////		 if($ret >0){
+////		 	echo "插入成功";
+////		 }
+//	}catch(PDOException $e){
+//		echo $e->getMessage();
+//	}
 //	PDO提供两个执行sql的方法
 //1.exec 执行不要结果集的语句  比如 增删改   不需要结果集
 //2.query 执行要结果集的语句  比如 查询 desc
