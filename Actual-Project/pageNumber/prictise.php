@@ -1,8 +1,9 @@
 <?php
-//	var_dump($_SERVER);
+	var_dump($_SERVER);
 	//REQUEST_SCHEME   获取协议
-	//HTTP_HOST        获取主域名 www.baidu.com
+	//HTTP_HOST  SERVER_NAME       获取主域名 www.baidu.com
 	//SERVER_PORT      获取端口 
+	//REQUEST_URI        /index.php?name=heyushuo&page=10
 	
 //	$url = 'http://www.baidu.com/index.php?name=heyushuo&page=10';
 //	$arr = parse_url($url);   //query  得到 'name=heyushuo&page=10'
