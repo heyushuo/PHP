@@ -11,6 +11,8 @@
 	$url
 	allUrl first prev next end limit*/
 	$page = new Page(5,50);
+	echo $page->first();
+	var_dump($page->allUrl());
 	class Page
 	{
 		//每页显示个数
@@ -82,33 +84,63 @@
 					$path = $path."?".$query;
 				}
 			}
-			echo $scheme."://".$host.":".$port.$path;
+//			echo $scheme."://".$host.":".$port.$path;
 			return  $scheme."://".$host.":".$port.$path;
 		}
+
+		//设置分页
+		protected function setUrl($str)
+		{
+				//查看是否包含 ? 这个字符
+			if(strstr($this->url, "?")){
+				$url = $this->url.'&'.$str;
+			}else{
+				$url = $this->url.'?'.$str;
+			}
+			return $url;
+		}
+
 		public function allUrl()
 		{
-			
+			return [
+				'first'=> $this->first(),
+				'prev'=> $this->prev(),
+				'next'=>$this->next(),
+				'end'=>$this->end()
+			];
 		}
 		public function first()
 		{
-			
+			return $this->setUrl('page=1');
 		}
 		public function prev()
 		{
-			
+			//根据当前page得到下一页的页码
+			if($this->page+1 > $this->totalPage){
+				$page=$this->totalPage;
+			}else{
+				$page = $this->page+1;
+			}
+			return $this->setUrl("page=".$page);
 		}
 		public function next()
 		{
-			
+			//根据当前page得到下一页的页码
+			if($this->page-1 <1){
+				$page=1;
+			}else{
+				$page = $this->page-1;
+			}
+			return $this->setUrl("page=".$page);
 		}
 		public function end()
 		{
-			
+			return $this->setUrl("page=".$this->totalPage);
 		}
-		public function limit()
-		{
-			
-		}
+//		public function limit()
+//		{
+//			
+//		}
 		
 	}
 	
