@@ -40,4 +40,10 @@ uniqid()
 $className = get_class($this);
 					//截取除了后五个
 $table = strtolower(substr($className, 0,-5));
+
+if(is_string($limit)){
+	$this->options['limit'] = 'limit '.$limit;
+}else if(is_array($limit)){
+	$this->options['limit'] = 'limit '.join(",", $limit);
+}
 ?>

@@ -1,5 +1,8 @@
 <?php
-
+	$config = include("config.php");
+	var_dump($config);
+	$m = new Model($config);
+	var_dump($m->sql);
 	class Model 
 	{
 		//主机名
@@ -29,12 +32,12 @@
 		public function __construct($config)
 		{
 			//对成员变量一一初始化
-			$this->host = $confog['DB_HOST'];
-			$this->user = $confog['DB_USER'];
-			$this->pwd = $confog['DB_PWS'];
-			$this->dnname = $confog['DB_NAME'];
-			$this->charset = $confog['DB_CHARSET'];
-			$this->prefix = $confog['DB_PREFIX'];
+			$this->host = $config['DB_HOST'];
+			$this->user = $config['DB_USER'];
+			$this->pwd = $config['DB_PWS'];
+			$this->dnname = $config['DB_NAME'];
+			$this->charset = $config['DB_CHARSET'];
+			$this->prefix = $config['DB_PREFIX'];
 			
 			//连接数据库
 			$this->link =$this->connect();
@@ -115,12 +118,39 @@
 			}
 			return $this;
 		}
-		//select方法
-		
+		//select方法 拼接sql语句
+		public function select()
+		{
+			//* 通过绑定的 PHP 变量执行一条预处理语句 */
+			//先写一个带有占位符的sql语句
+			$sql = 'select %FIELD% from %TABLE% %WHERE% %GROUP% %HAVING% %ORDER% %LIMIT%';
+			//将options中对应的值一次的替换上面的占位符
+			//str_replace($search, $replace, $subject)
+			$sql = str_replace(['%FIELD%','%TABLE%','%GROUP%','%HAVING%','%ORDER%','%LIMIT%'], 
+			[$this->options['field'],$this->options['table'],$this->options['group'],$this->options['having'],$this->options['order'],$this->options['limit']]
+			, $sql);
+			//保存一份sql语句
+			$this->sql = $sql;
+			//执行sql语句
+			return $this->query($sql);
+			
+		}
 		//query 需要结果集
+		
+		public function query()
+		{
+			
+		}
 		//exec 不需要结果集  
 		
-		
+		//魔术方法使得外部可以访问呢内部私有的
+		function __get($name)
+		{
+			if($name=='sql'){
+				return $this->sql;
+			}
+			return false;
+		}
 		
 		
 		//初始化
