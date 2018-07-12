@@ -33,4 +33,11 @@ $this->suffix = pathinfo($this->oldName)['extension'];
 
 //生成随机字符串
 uniqid()
+
+四.
+//没有设置,通过类名来得到表名	
+//得到当前类名字符
+$className = get_class($this);
+					//截取除了后五个
+$table = strtolower(substr($className, 0,-5));
 ?>
