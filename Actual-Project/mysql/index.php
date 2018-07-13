@@ -1,7 +1,8 @@
 <?php
 	$config = include("config.php");
-	var_dump($config);
+//	var_dump($config);
 	$m = new Model($config);
+	$m->field("*")->table("myguests")->where("id=1")->order("dec")->select(); 
 	var_dump($m->sql);
 	class Model 
 	{
@@ -126,8 +127,8 @@
 			$sql = 'select %FIELD% from %TABLE% %WHERE% %GROUP% %HAVING% %ORDER% %LIMIT%';
 			//将options中对应的值一次的替换上面的占位符
 			//str_replace($search, $replace, $subject)
-			$sql = str_replace(['%FIELD%','%TABLE%','%GROUP%','%HAVING%','%ORDER%','%LIMIT%'], 
-			[$this->options['field'],$this->options['table'],$this->options['group'],$this->options['having'],$this->options['order'],$this->options['limit']]
+			$sql = str_replace(['%FIELD%','%TABLE%','%WHERE%','%GROUP%','%HAVING%','%ORDER%','%LIMIT%'], 
+			[$this->options['field'],$this->options['table'],$this->options['where'],$this->options['group'],$this->options['having'],$this->options['order'],$this->options['limit']]
 			, $sql);
 			//保存一份sql语句
 			$this->sql = $sql;
