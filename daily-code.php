@@ -46,4 +46,13 @@ if(is_string($limit)){
 }else if(is_array($limit)){
 	$this->options['limit'] = 'limit '.join(",", $limit);
 }
+
+五.
+//将正则匹配到的字符串替换为指定的字符串
+preg_replace($pattern, $repalce, $str);
+
+
+//将正则特殊字符进行转义 {} [] () * . ? +
+preg_quote($str)
+
 ?>
