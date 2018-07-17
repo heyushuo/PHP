@@ -2,8 +2,16 @@
 	$config = include("config.php");
 //	var_dump($config);
 	$m = new Model($config);
-	$m->field("*")->table("myguests")->where("id=1")->order("dec")->select(); 
-	var_dump($m->sql);
+//	$m->field("*")->table("myguests")->where("id=1")->order("dec")->select(); 
+//	var_dump($m->sql);
+
+
+//	$m->limit('0,5')->table('user')->field("age,name")->order("money desc")->where('id>1')->select();
+//		var_dump($m->sql);
+
+$m->limit('0,5')->table('user')->field("id")->order("money desc")->where('id=1')->select();
+var_dump($m->sql);
+var_dump($m->limit('0,5')->table('user')->field("id")->order("money desc")->where('id=1')->select());
 	class Model 
 	{
 		//主机名
@@ -32,6 +40,7 @@
 		//构造方法 ,对成员变量进行初始化
 		public function __construct($config)
 		{
+			
 			//对成员变量一一初始化
 			$this->host = $config['DB_HOST'];
 			$this->user = $config['DB_USER'];
@@ -108,6 +117,7 @@
 		//limit方法  可以传递字符串或者数组
 		public function limit($limit)
 		{
+			$this->initOptions();
 			//如果不为空,在进行处理
 			if(!empty($limit)){
 				if(is_string($limit)){
@@ -122,6 +132,7 @@
 		//select方法 拼接sql语句
 		public function select()
 		{
+//			$this->initOptions();
 			//* 通过绑定的 PHP 变量执行一条预处理语句 */
 			//先写一个带有占位符的sql语句
 			$sql = 'select %FIELD% from %TABLE% %WHERE% %GROUP% %HAVING% %ORDER% %LIMIT%';
@@ -138,8 +149,24 @@
 		}
 		//query 需要结果集
 		
-		public function query()
+		public function query($sql)
 		{
+//			var_dump($this->link);
+//			die();
+			//执行sql语句
+			$result = mysqli_query($this->link, $sql);
+			var_dump($result);
+			die();
+//			如果有结果,并且有受影响的行数.
+			//提取结果集存放到数组中
+			if($result && mysqli_affected_rows($this->link)){
+//				mysql_fetch_assoc() 函数从结果集中取得一行作为关联数组。
+//返回根据从结果集取得的行生成的关联数组，如果没有更多行，则返回 false。
+				while($data = mysqli_fetch_assoc($result) ){
+					$newData[]=$data;
+				}
+			}
+			return $newData;
 			
 		}
 		//exec 不需要结果集  
@@ -161,7 +188,7 @@
 			foreach ($arr as  $value) {
 				$this->options[$value]='';
 				//将table默认设置为tableName,如果调用table方法,就用自己设置的
-				if($value='table'){
+				if($value=='table'){
 					$this->options[$value] = $this->tableName;
 				}
 			}
